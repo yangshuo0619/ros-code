@@ -1,1 +1,47 @@
 # ros kinetic build
+
+$ sudo sh -c '. /etc/lsb-release && echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list'
+
+$ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+$ sudo apt-get update
+
+$ sudo apt-get install python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential
+
+$ sudo rosdep init
+
+$ rosdep update
+
+$ mkdir ~/ros_catkin_ws
+
+$ cd ~/ros_catkin_ws
+
+==================================================================================================
+
+Desktop-Full Install: ROS, rqt, rviz, robot-generic libraries, 2D/3D simulators, navigation and 2D/3D perception
+
+    $ rosinstall_generator desktop_full --rosdistro kinetic --deps --wet-only --tar > kinetic-desktop-full-wet.rosinstall
+    $ wstool init -j8 src kinetic-desktop-full-wet.rosinstall
+
+Desktop Install (recommended): ROS, rqt, rviz, and robot-generic libraries
+
+    $ rosinstall_generator desktop --rosdistro kinetic --deps --wet-only --tar > kinetic-desktop-wet.rosinstall
+    $ wstool init -j8 src kinetic-desktop-wet.rosinstall
+
+ROS-Comm: (Bare Bones) ROS package, build, and communication libraries. No GUI tools.
+
+    $ rosinstall_generator ros_comm --rosdistro kinetic --deps --wet-only --tar > kinetic-ros_comm-wet.rosinstall
+    $ wstool init -j8 src kinetic-ros_comm-wet.rosinstall
+
+-------------------------------------------------------------------------------------------------
+wstool update -j 4 -t src
+
+==================================================================================================
+
+$ rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+
+$ ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release
+
+$ source ~/ros_catkin_ws/install_isolated/setup.bash
+
+
